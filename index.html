@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>My first Vue app</title>
+    <script src="https://unpkg.com/vue"></script>
+    <link rel="stylesheet" href="./css/style.css" />
+  </head>
+  <body>
+    <div id="app">
+      <div class="center">
+        <h1>TODO APP</h1>
+        <p>Type a todo and hit enter</p>
+        <br />
+      </div>
+
+      <form v-on:submit="addValue">
+        <input type="text" v-model="value" />
+      </form>
+
+      <p v-if="value">You're about to add {{value}}</p>
+
+      <li v-for="todo in todos">
+        {{todo.text}}
+        <button v-on:click="deleteItem(todo)">Delete</button>
+      </li>
+    </div>
+
+    <script>
+      var app = new Vue({
+        el: "#app",
+        data: {
+          value: "",
+          todos: [
+            // {
+            //   id: 0,
+            //   text: "Hello",
+            // },
+          ],
+        },
+        methods: {
+          deleteItem: function ({ id }) {
+            this.todos = this.todos.filter((todo) => todo.id !== id);
+          },
+          addValue: function (e) {
+            e.preventDefault();
+            this.todos.push({ text: this.value, id: this.todos.length });
+            this.value = "";
+          },
+        },
+      });
+    </script>
+  </body>
+</html>
